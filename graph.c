@@ -16,7 +16,7 @@ void traverse_graph(Graph *node, LinkedList *llvisited, int depth) {
 	printf("%s%d\n", spaces, node->data);
 
 	if (llvisited == NULL) {
-		llvisited = (LinkedList *) malloc(SIZEOF_LinkedList);
+		llvisited = malloc(SIZEOF_LinkedList);
 	}
 	LinkedList *ll_node = create_from_data_linked_list((void *)node);
 	add_linked_list(&llvisited, ll_node);
@@ -44,7 +44,7 @@ void free_graph(Graph **pnode, LinkedList *llvisited) {
 	}
 
 	if (llvisited == NULL) {
-		llvisited = (LinkedList *) malloc(SIZEOF_LinkedList);
+		llvisited = malloc(SIZEOF_LinkedList);
 	}
 	LinkedList *ll_node = create_from_data_linked_list((void *)node);
 	add_linked_list(&llvisited, ll_node);
@@ -89,7 +89,7 @@ Graph *construct_graph(LinkedList *llcreated_nodes) {
 	scanf("%d", &data); printf("%d\n", data);
 	Graph *node = create_from_data_graph(data);
 	if (llcreated_nodes == NULL) {
-		llcreated_nodes = (LinkedList *) malloc(SIZEOF_LinkedList);
+		llcreated_nodes = malloc(SIZEOF_LinkedList);
 	}
 	LinkedList *last_created = create_from_data_linked_list((void *) node);
 	add_linked_list(&llcreated_nodes, last_created);
@@ -158,7 +158,7 @@ int get_data_graph(Graph *node) {
 }
 
 Graph *create_from_data_graph(int data) {
-	Graph *node = (Graph *) malloc(sizeof(Graph));
+	Graph *node = malloc(sizeof(Graph));
 	node->data = data;
 	node->adjacent = NULL;
 	return node;
@@ -177,7 +177,7 @@ void print_adjacent_graph(Graph *node) {
 	print_linked_list_int(node->adjacent);
 }
 
-LinkedList *get_adj_list_graph(Graph *node) {
+LinkedList *get_adjacent_graph(Graph *node) {
 	return node->adjacent;
 }
 
