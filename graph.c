@@ -10,16 +10,16 @@ void traverse_graph(Graph *node, LinkedList *llvisited, int depth) {
 	if (node == NULL) {
 		return;
 	}
-	char spaces[depth+1];
+	char *spaces = malloc(depth+1);
 	for (int i=0; i<depth; i++) spaces[i] = ' ';
 	spaces[depth] = '\0';
 	printf("%s%d\n", spaces, node->data);
+	free(spaces);
 
 	if (llvisited == NULL) {
-		llvisited = (LinkedList *) malloc(SIZEOF_LinkedList);
+		llvisited = malloc(SIZEOF_LinkedList);
 	}
-	LinkedList *ll_node = create_from_data_linked_list((void *)node);
-	add_linked_list(&llvisited, ll_node);
+	add_linked_list(&llvisited, (void *)node);
 
 	LinkedList *curr_in_node_adjacent = node->adjacent;
 	while (curr_in_node_adjacent != NULL) {
@@ -44,10 +44,9 @@ void free_graph(Graph **pnode, LinkedList *llvisited) {
 	}
 
 	if (llvisited == NULL) {
-		llvisited = (LinkedList *) malloc(SIZEOF_LinkedList);
+		llvisited = malloc(SIZEOF_LinkedList);
 	}
-	LinkedList *ll_node = create_from_data_linked_list((void *)node);
-	add_linked_list(&llvisited, ll_node);
+	add_linked_list(&llvisited, (void *)node);
 
 	LinkedList *curr_in_node_adjacent = node->adjacent;
 	while (curr_in_node_adjacent != NULL) {
@@ -89,10 +88,9 @@ Graph *construct_graph(LinkedList *llcreated_nodes) {
 	scanf("%d", &data); printf("%d\n", data);
 	Graph *node = create_from_data_graph(data);
 	if (llcreated_nodes == NULL) {
-		llcreated_nodes = (LinkedList *) malloc(SIZEOF_LinkedList);
+		llcreated_nodes = malloc(SIZEOF_LinkedList);
 	}
-	LinkedList *last_created = create_from_data_linked_list((void *) node);
-	add_linked_list(&llcreated_nodes, last_created);
+	add_linked_list(&llcreated_nodes, (void *)node);
 	while (true) {
 		int add_child;
 		printf("Add a child for this node (data %d)? 0 for no, 1 for yes:\n", node->data);
@@ -109,7 +107,7 @@ Graph *construct_graph(LinkedList *llcreated_nodes) {
 			LinkedList *curr = llcreated_nodes;
 			printf("Existing node data:\n");
 			while (curr != NULL) {
-				Graph *current_graph = (Graph *) get_data_linked_list(curr);
+				Graph *current_graph = (Graph *)get_data_linked_list(curr);
 				if (current_graph != NULL)
 					printf("%d ", get_data_graph(current_graph));
 				curr = next_linked_list(curr);
@@ -135,7 +133,7 @@ Graph *find_by_value_graph(LinkedList *graph_nodes, int value) {
 	}
 	LinkedList *curr = graph_nodes;
 	while (curr != NULL) {
-		Graph *current_graph_node = (Graph *) get_data_linked_list(curr);
+		Graph *current_graph_node = (Graph *)get_data_linked_list(curr);
 		printf("Got graph from linked list\n");
 		int current_value;
 		if (current_graph_node != NULL) {
@@ -158,7 +156,7 @@ int get_data_graph(Graph *node) {
 }
 
 Graph *create_from_data_graph(int data) {
-	Graph *node = (Graph *) malloc(sizeof(Graph));
+	Graph *node = malloc(sizeof(Graph));
 	node->data = data;
 	node->adjacent = NULL;
 	return node;
@@ -169,13 +167,12 @@ void add_edge_graph(Graph *tail, Graph *head) {
 		printf("Tried to add null graph to tail with data %d\n", tail->data);
 		return;
 	}
-	LinkedList *head_llnode = create_from_data_linked_list((void *) head);
-	add_linked_list(&(tail->adjacent), head_llnode);
+	add_linked_list(&(tail->adjacent), (void *)head);
 }
 
-void print_adjacent_graph(Graph *node) {
-	print_linked_list_int(node->adjacent);
-}
+// void print_adjacent_graph(Graph *node) {
+// 	print_linked_list(node->adjacent);
+// }
 
 LinkedList *get_adj_list_graph(Graph *node) {
 	return node->adjacent;

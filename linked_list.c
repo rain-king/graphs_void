@@ -7,9 +7,10 @@ typedef struct LinkedList {
 
 const unsigned int SIZEOF_LinkedList = sizeof(LinkedList);
 
-void add_linked_list(LinkedList **phead, LinkedList *child) {
+void add_linked_list(LinkedList **phead, void *data) {
+	LinkedList *new_node = create_from_data_linked_list(data);
 	if (*phead == NULL) {
-		*phead = child;
+		*phead = new_node;
 		return;
 	}
 
@@ -17,7 +18,7 @@ void add_linked_list(LinkedList **phead, LinkedList *child) {
 	while (curr->next != NULL) {
 		curr = curr->next;
 	}
-	curr->next = child;
+	curr->next = new_node;
 }
 
 void delete_n_linked_list(LinkedList **phead, int n) {
@@ -45,17 +46,28 @@ void free_linked_list(LinkedList **phead) {
 	*phead = NULL;
 }
 
-void print_linked_list_int(LinkedList *head) {
+void print_linked_list(LinkedList *head, char *type) {
 	if (head == NULL) {
 		printf("\n");
 		return;
 	}
 	LinkedList *curr = head;
 	while (curr != NULL) {
-		printf("%d ", *(int *)(curr->data));
+		if (curr->data == NULL) {
+			curr = curr->next;
+			continue;
+		}
+		if (strcmp(type, "d")) {
+			printf("%d\n", *(int *)(curr->data));
+		} else if (strcmp(type, "f")) {
+			printf("%f\n", *(float *)(curr->data));
+		} else if (strcmp(type, "s")) {
+			printf("%s\n", (char *)(curr->data));
+		} else if (strcmp(type, "c")) {
+			printf("%c\n", *(char *)(curr->data));
+		}
 		curr = curr->next;
 	}
-	printf("\n");
 }
 
 void *get_data_linked_list(LinkedList *node) {
@@ -67,7 +79,7 @@ LinkedList *next_linked_list(LinkedList *node) {
 }
 
 LinkedList *create_from_data_linked_list(void *data) {
-	LinkedList *node = (LinkedList *) malloc(SIZEOF_LinkedList);
+	LinkedList *node = malloc(SIZEOF_LinkedList);
 	node->data = data;
 	node->next = NULL;
 	return node;
@@ -79,5 +91,5 @@ LinkedList *find_by_value_linked_list(LinkedList *head, void *value) {
 		if (curr->data == value) return curr;
 		curr = curr->next;
 	}
-	return NULL; // returns NULL if not found
+	return NULL;
 }
