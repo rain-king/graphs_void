@@ -74,7 +74,7 @@ void *get_data_linked_list(LinkedList *node) {
 	return node == NULL ? NULL : node->data;
 }
 
-LinkedList *next_linked_list(LinkedList *node) {
+LinkedList *get_next_linked_list(LinkedList *node) {
     return node->next;
 }
 

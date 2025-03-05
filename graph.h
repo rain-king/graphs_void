@@ -13,6 +13,6 @@ void traverse_graph(Graph *node, LinkedList *llvisited, int depth);
 Graph *construct_tree_graph();
 Graph *construct_graph(LinkedList *llcreated_nodes);
 Graph *find_by_value_graph(LinkedList *graph_nodes, int value);
-LinkedList *get_adj_list_graph(Graph *node);
+LinkedList *get_adjacent_graph(Graph *node);
 int get_data_graph(Graph *node);
 void free_graph(Graph **pnode, LinkedList *llvisited);

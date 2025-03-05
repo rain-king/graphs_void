@@ -10,7 +10,7 @@ int main() {
 	// free(empty);
 	// empty = malloc(SIZEOF_LinkedList);
 	// // free_graph(&head, NULL);
-	traverse_graph(find_by_value_graph(get_adj_list_graph(head), 5), NULL, 0);
+	traverse_graph(find_by_value_graph(get_adjacent_graph(head), 1), NULL, 0);
 
 	// int x[3] = { 1, 2, 3 };
 	// LinkedList *list = malloc(SIZEOF_LinkedList);

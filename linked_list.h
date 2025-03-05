@@ -11,7 +11,7 @@ extern const unsigned int SIZEOF_LinkedList;
 
 // getters
 void *get_data_linked_list(LinkedList *node);
-LinkedList *next_linked_list(LinkedList *node);
+LinkedList *get_next_linked_list(LinkedList *node);
 // methods
 void add_linked_list(LinkedList **phead, void *data);
 void delete_n_linked_list(LinkedList **phead, int n);
