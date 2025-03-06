@@ -84,6 +84,7 @@ Graph *construct_tree_graph() {
 
 Graph *construct_graph(LinkedList *llcreated_nodes) {
 	const char* function_name_str = "construct_graph";
+
 	printf("%s: Enter the integer data for this node:\n", function_name_str);
 	int data;
 	scanf("%d", &data); printf("%s: %d\n", function_name_str, data);
@@ -92,6 +93,7 @@ Graph *construct_graph(LinkedList *llcreated_nodes) {
 		llcreated_nodes = malloc(SIZEOF_LinkedList);
 	}
 	add_linked_list(&llcreated_nodes, (void *)node);
+
 	while (true) {
 		int add_child;
 		printf("%s: Add a child for this node (data %d)? 0 for no, 1 for yes:\n", function_name_str, node->data);
@@ -111,7 +113,7 @@ Graph *construct_graph(LinkedList *llcreated_nodes) {
 			while (curr != NULL) {
 				Graph *current_graph = (Graph *)get_data_linked_list(curr);
 				if (current_graph != NULL) {
-					printf("%s: %d ", get_data_graph(current_graph));
+					printf("%d ", get_data_graph(current_graph));
 					found_existing_nodes = true;
 				}
 				curr = get_next_linked_list(curr);
@@ -126,6 +128,7 @@ Graph *construct_graph(LinkedList *llcreated_nodes) {
 			}
 		}
 	}
+	printf("%s: Node with value %d returned\n", function_name_str, node->data);
 	return node;
 }
 
@@ -159,7 +162,7 @@ Graph *find_by_value_graph(LinkedList *graph_nodes, int value) {
 Graph *create_from_data_graph(int data) {
 	Graph *node = malloc(sizeof(Graph));
 	node->data = data;
-	node->adjacent = NULL;
+	node->adjacent = malloc(SIZEOF_LinkedList);
 	return node;
 }
 
@@ -173,7 +176,7 @@ void add_edge_graph(Graph *tail, Graph *head) {
 	if (null_tail) {
 		printf("%s: Tried to add a graph to a null tail\n", function_name_str);
 	}
-	if (null_head || null_tail) return;
+	if (null_head || null_tail) exit(1);
 	printf("%s: Trying to add edge (%d, %d)\n", function_name_str, tail->data, head->data);
 	add_linked_list(&(tail->adjacent), (void *)head);
 	printf("%s: Done\n", function_name_str);
